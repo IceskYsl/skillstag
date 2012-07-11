@@ -1,0 +1,31 @@
+<div class="content">
+  <div class="box">
+    <div id="node_info">
+      <%= render "node_info", :node => @node %>
+    </div>
+
+    <div class="topics">
+      <%= render :partial => "topics/topic", :collection => @topics %>
+    </div>
+    <%= will_paginate @topics, :inner_window => 2 %>
+
+  </div>
+
+  <% if action_name == "index" %>
+    <%= render_cell :topics, :index_sections %>
+    <%= render_cell :topics, :index_locations %>
+  <% end %>
+
+  <% if !@node.blank? %>
+    <% content_for :node_feed_link do %>
+      <%= auto_discovery_link_tag(:rss, feed_node_topics_url, :title => "#{@node.name}節點最新話題") %>
+    <% end %>
+  <% end %>
+
+</div>
+
+<div class="sidebar">
+    <%= render "sidebar_for_topic_index" if action_name.in?(%w(index)) %>
+    <%= render "sidebar_for_topic_recent" if action_name.in?(%w(recent no_reply)) %>
+    <%= render "sidebar_for_topic_node" if action_name == "node" %>
+</div>

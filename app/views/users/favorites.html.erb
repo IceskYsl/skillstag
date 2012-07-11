@@ -1,0 +1,22 @@
+<div class="content">
+  <%= render "menu" %>
+  <div class="box">
+
+    <table class="node_topics table">
+      <tr class="head">
+        <td class="title"><%=t("common.title")%></td>
+        <td class="opts"></td>
+      </tr>
+      <% @topics.each do |item| %>
+        <% next if item.blank? %>
+        <tr class="topic <%= cycle('odd',"") %>">
+          <td class="title"><%= render_topic_title(item) %></td>
+          <td><%= render_node_name(item.node_name,item.node_id) %></td>
+        </tr>
+      <% end %>
+    </table>
+    <%= will_paginate @topics %>
+  </div>
+</div>
+
+<%= render "sidebar", :user => @user %>
